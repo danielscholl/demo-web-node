@@ -1,8 +1,16 @@
 /// <reference path="typings/node/node.d.ts"/>
 
 var http = require('http');
-http.createServer(function (req, res) {
-    console.log('Got request for ' + req.url);
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('<h1>Hello Code and Azure Web Apps!</h1>');
-}).listen(process.env.PORT);
+var os = require('os');
+var port = process.env.PORT || 80;
+
+var server = http.createServer(function (request, response) {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.write('Hello World\n');
+  response.write('Hostname: ' + os.hostname() + '\n');
+  response.end('Node Version: ' + process.env.NODE_VERSION + '\n');
+});
+
+server.listen(port)
+
+console.log('Server running at http://localhost:' + port)
